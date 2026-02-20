@@ -1,31 +1,29 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 
 app = Flask(__name__)
 
-songs = [
-    {"id": 1, "title": "Imagine", "artist": "John Lennon", "album": "Imagine"},
-    {"id": 2, "title": "Billie Jean", "artist": "Michael Jackson", "album": "Thriller"},
-    {"id": 3, "title": "Bohemian Rhapsody", "artist": "Queen", "album": "A Night at the Opera"}
-]
+# Datos de ejemplo
+songs = ["Song A", "Song B", "Song C"]
+artists = ["Artist 1", "Artist 2"]
+albums = ["Album X", "Album Y"]
 
-@app.route('/songs', methods=['GET'])
+# Página principal con HTML dinámico
+@app.route("/")
+def home():
+    return render_template("index.html", songs=songs, artists=artists, albums=albums)
+
+# Endpoints JSON opcionales
+@app.route("/songs")
 def get_songs():
     return jsonify(songs)
 
-@app.route('/songs/<int:song_id>', methods=['GET'])
-def get_song(song_id):
-    song = next((s for s in songs if s["id"] == song_id), None)
-    return jsonify(song) if song else (jsonify({"error": "Canción no encontrada"}), 404)
-
-@app.route('/artists', methods=['GET'])
+@app.route("/artists")
 def get_artists():
-    artists = list(set([s["artist"] for s in songs]))
     return jsonify(artists)
 
-@app.route('/albums', methods=['GET'])
+@app.route("/albums")
 def get_albums():
-    albums = list(set([s["album"] for s in songs]))
     return jsonify(albums)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

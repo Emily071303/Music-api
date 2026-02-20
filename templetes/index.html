@@ -13,24 +13,36 @@
     <h1>🎵 Bienvenido a la Music API</h1>
 
     <h2>Canciones</h2>
-    <ul>
-        {% for song in songs %}
-            <li>{{ song }}</li>
-        {% endfor %}
-    </ul>
+    <ul id="songs-list"></ul>
 
     <h2>Artistas</h2>
-    <ul>
-        {% for artist in artists %}
-            <li>{{ artist }}</li>
-        {% endfor %}
-    </ul>
+    <ul id="artists-list"></ul>
 
     <h2>Álbumes</h2>
-    <ul>
-        {% for album in albums %}
-            <li>{{ album }}</li>
-        {% endfor %}
-    </ul>
+    <ul id="albums-list"></ul>
+
+    <script>
+        // Función para cargar datos desde un endpoint y mostrarlos en una lista
+        async function loadData(endpoint, elementId) {
+            try {
+                const response = await fetch(endpoint);
+                const data = await response.json();
+                const list = document.getElementById(elementId);
+                list.innerHTML = "";
+                data.forEach(item => {
+                    const li = document.createElement("li");
+                    li.textContent = item;
+                    list.appendChild(li);
+                });
+            } catch (error) {
+                console.error("Error cargando", endpoint, error);
+            }
+        }
+
+        // Cargar datos al abrir la página
+        loadData("/songs", "songs-list");
+        loadData("/artists", "artists-list");
+        loadData("/albums", "albums-list");
+    </script>
 </body>
 </html>
