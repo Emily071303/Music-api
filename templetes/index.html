@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Music API</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #4CAF50; }
+        ul { list-style-type: none; padding: 0; }
+        li { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>🎵 Bienvenido a la Music API</h1>
+
+    <h2>Canciones</h2>
+    <ul>
+        {% for song in songs %}
+            <li>{{ song }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Artistas</h2>
+    <ul>
+        {% for artist in artists %}
+            <li>{{ artist }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Álbumes</h2>
+    <ul>
+        {% for album in albums %}
+            <li>{{ album }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
